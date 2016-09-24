@@ -112,6 +112,23 @@ class Request extends \Zend\Diactoros\Request
 
         return $filters;
     }
+    
+    public function getRawFilter()
+    {
+        $queryString = $_SERVER['QUERY_STRING'];
+        $elements = explode("&", $queryString);
+        
+        foreach($elements as $element){
+            
+            $parts = explode('=', $element);
+            
+            if(strtolower($parts[0]) == 'filter'){
+                return $parts[1];
+            }
+        }
+        
+        return null;
+    }
 
     /**
      * @return \NilPortugues\Api\JsonApi\Http\Request\Parameters\Fields
